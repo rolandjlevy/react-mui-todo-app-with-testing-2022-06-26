@@ -1,15 +1,20 @@
 * {
   font-size: 1rem;
-  color: #fff;
+  color: #000;
 }
 
 body {
   margin: 30px;
-  background: #444;
+  background: #e5e8ff;
   font-family: 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
 }
 
 h3 {
@@ -38,8 +43,21 @@ li.todo > .description {
   margin-right: 5px;
 }
 
-input, li.todo > .description, button.add  {
+li.todo > .description  {
   color: black;
+}
+
+.list-input {
+  background: #fff;
+}
+
+button.add:not(:disabled),
+button.add:not(:disabled) > * {
+  color: #fff;
+}
+
+button.add:disabled {
+  color: #000;
 }
 
 .remove {
@@ -71,6 +89,10 @@ input, li.todo > .description, button.add  {
 
 input, button.add {
   padding: 5px 10px;
+}
+
+.input-row {
+  margin-top: 10px;
 }
 
 @keyframes fadeInAnimation { 

@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+
+import { 
+  Button, 
+  FormGroup,
+  Grid, 
+  TextField,
+  Typography
+} from '@material-ui/core';
+
 import Todo from './Todo';
 
-function App() {
+const App = () => {
   const [todo, setTodo] = useState('');
   const [todos, updateTodos] = useState([]);
 
@@ -30,26 +39,36 @@ function App() {
   }
 
   return (
-    <main className="App">
-      <h3>React List Maker</h3>
-      
-      <input 
-        type="text" 
-        value={todo} 
-        aria-label="description"
-        onChange={handleChange}
-        onKeyPress={handleKeyPress}
-        placeholder="Description..."
-      />
-      
-      <button 
-        onClick={(e) => handleAdd(e)} 
-        className="add" 
-        disabled={!todo.length}
-      >
-        Add
-      </button>
-      
+    <Grid container className="main">
+      <Grid item>
+        <Typography variant="h5">Mui List Maker</Typography>
+      </Grid>
+      <Grid item>
+        <FormGroup className="input-row" row>
+          <TextField 
+            type="text" 
+            value={todo} 
+            aria-label="Description"
+            label="Description"
+            onChange={handleChange}
+            onKeyPress={handleKeyPress}
+            variant="outlined"
+            placeholder="Description..."
+            className="list-input"
+          />
+          <Button 
+            className="add" 
+            disabled={!todo.length}
+            variant="contained"
+            color="primary"
+            onClick={(e) => handleAdd(e)} 
+            disableElevation
+          >
+            Add
+          </Button>
+        </FormGroup>
+      </Grid>
+      <Grid item>
       {todos.length ? 
         (<ul className="todos"> 
           {(todos.map(({ id, todo }) => (
@@ -63,8 +82,8 @@ function App() {
           )}
         </ul>) : <p>No items found</p>
       }
-      
-    </main>
+      </Grid>
+    </Grid>
   );
 }
 
