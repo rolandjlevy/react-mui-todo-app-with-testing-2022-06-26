@@ -4,7 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { 
   Button, 
   FormGroup,
-  Grid, 
+  Grid,
+  List,
   TextField,
   Typography
 } from '@material-ui/core';
@@ -12,11 +13,11 @@ import {
 import Todo from './Todo';
 
 const App = () => {
-  const [todo, setTodo] = useState('');
+  const [currentTodo, setCurrentTodo] = useState('');
   const [todos, updateTodos] = useState([]);
 
   const handleChange = (e) => {
-    setTodo(e.target.value);
+    setCurrentTodo(e.target.value);
   }
 
   const handleKeyPress = (e) => {
@@ -27,9 +28,12 @@ const App = () => {
   }
 
   const handleAdd = (e) => {
-    const newTodo = { todo, id: uuidv4() };
+    const newTodo = { 
+      description: currentTodo, 
+      id: uuidv4() 
+    };
     updateTodos([...todos, newTodo]);
-    setTodo('');
+    setCurrentTodo('');
     e.target.focus();
   }
 
@@ -41,13 +45,13 @@ const App = () => {
   return (
     <Grid container className="main">
       <Grid item>
-        <Typography variant="h5">Mui List Maker</Typography>
+        <Typography variant="h4">Mui List Maker</Typography>
       </Grid>
       <Grid item>
         <FormGroup className="input-row" row>
           <TextField 
             type="text" 
-            value={todo} 
+            value={currentTodo} 
             aria-label="Description"
             label="Description"
             onChange={handleChange}
@@ -58,7 +62,7 @@ const App = () => {
           />
           <Button 
             className="add" 
-            disabled={!todo.length}
+            disabled={!currentTodo.length}
             variant="contained"
             color="primary"
             onClick={(e) => handleAdd(e)} 
@@ -69,19 +73,19 @@ const App = () => {
         </FormGroup>
       </Grid>
       <Grid item>
-      {todos.length ? 
-        (<ul className="todos"> 
-          {(todos.map(({ id, todo }) => (
-            <Todo 
-              key={id} 
-              id={id} 
-              description={todo} 
-              handleRemove={() => handleRemove(id)} 
-            />
-            ))
-          )}
-        </ul>) : <p>No items found</p>
-      }
+        {todos.length ? 
+          (<List className="todos"> 
+            {(todos.map(({ id, description }) => (
+              <Todo 
+                key={id} 
+                id={id} 
+                description={description} 
+                handleRemove={handleRemove} 
+              />
+              ))
+            )}
+          </List>) : <p>No items added</p>
+        }
       </Grid>
     </Grid>
   );
